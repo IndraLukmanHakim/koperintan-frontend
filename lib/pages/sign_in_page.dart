@@ -58,7 +58,7 @@ class _SignInPageState extends State<SignInPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "LOGIN",
+              "Masuk",
               style: primaryTextStyle.copyWith(
                 fontSize: 24,
                 fontWeight: semiBold,
@@ -68,7 +68,7 @@ class _SignInPageState extends State<SignInPage> {
               height: 2,
             ),
             Text(
-              "Sign In to Continue",
+              "Masuk untuk melanjutkan",
               style: subtitleTextStyle.copyWith(),
             ),
           ],
@@ -212,16 +212,16 @@ class _SignInPageState extends State<SignInPage> {
         margin: EdgeInsets.only(bottom: 30),
         child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
           Text(
-            'Belum Punya Akun?',
-            style: subtitleTextStyle.copyWith(fontSize: 12, fontWeight: medium),
+            'Belum Punya Akun? ',
+            style: subtitleTextStyle.copyWith(fontSize: 16, fontWeight: medium),
           ),
           GestureDetector(
             onTap: () {
               Navigator.pushNamed(context, '/sign-up');
             },
             child: Text(
-              'Sign Up',
-              style: purpleTextStyle.copyWith(fontSize: 12, fontWeight: medium),
+              'Daftar Sekarang',
+              style: purpleTextStyle.copyWith(fontSize: 16, fontWeight: medium),
             ),
           )
         ]),

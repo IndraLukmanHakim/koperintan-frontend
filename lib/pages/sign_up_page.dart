@@ -15,6 +15,7 @@ class _SignUpPageState extends State<SignUpPage> {
   TextEditingController usernameController = TextEditingController(text: '');
 
   TextEditingController nopolController = TextEditingController(text: '');
+  TextEditingController phoneController = TextEditingController(text: '');
 
   TextEditingController passwordController = TextEditingController(text: '');
 
@@ -33,6 +34,7 @@ class _SignUpPageState extends State<SignUpPage> {
         // username: usernameController.text,
         nopol: nopolController.text,
         password: passwordController.text,
+        phone: phoneController.text,
       )) {
         Navigator.pushNamed(context, '/home');
       } else {
@@ -40,7 +42,7 @@ class _SignUpPageState extends State<SignUpPage> {
           SnackBar(
             backgroundColor: alertColor,
             content: Text(
-              'Gagal Register!',
+              'Gagal Daftar!, Pastikan Data yang anda masukan benar. Contoh: Nama Lengkap, Nopol: , Password',
               textAlign: TextAlign.center,
             ),
           ),
@@ -169,7 +171,60 @@ class _SignUpPageState extends State<SignUpPage> {
                       style: primaryTextStyle,
                       controller: nopolController,
                       decoration: InputDecoration.collapsed(
-                        hintText: 'Nomor Polisi',
+                        hintText: 'KT1234JR',
+                        hintStyle: subtitleTextStyle,
+                      ),
+                    ),
+                  ),
+                ],
+              )),
+            )
+          ],
+        ),
+      );
+    }
+
+    Widget phoneinput() {
+      return Container(
+        margin: EdgeInsets.only(top: 20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Nomor Telepon',
+              style: primaryTextStyle.copyWith(
+                fontSize: 16,
+                fontWeight: medium,
+              ),
+            ),
+            SizedBox(
+              height: 12,
+            ),
+            Container(
+              height: 50,
+              padding: EdgeInsets.symmetric(
+                horizontal: 16,
+              ),
+              decoration: BoxDecoration(
+                color: backgroundColor2,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Center(
+                  child: Row(
+                children: [
+                  Image.asset(
+                    'assets/icon_chat.png',
+                    width: 17,
+                  ),
+                  SizedBox(
+                    width: 16,
+                  ),
+                  Expanded(
+                    child: TextFormField(
+                      style: primaryTextStyle,
+                      controller: phoneController,
+                      decoration: InputDecoration.collapsed(
+                        hintText: '08123456789',
                         hintStyle: subtitleTextStyle,
                       ),
                     ),
@@ -317,6 +372,7 @@ class _SignUpPageState extends State<SignUpPage> {
             children: [
               header(),
               nameInput(),
+              phoneinput(),
               nopolInput(),
               passwordInput(),
               isLoading ? loadingButton() : signUpButton(),

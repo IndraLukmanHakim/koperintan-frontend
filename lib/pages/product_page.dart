@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:pos/models/product_model.dart';
 import 'package:pos/providers/product_provider.dart';
+import 'package:pos/providers/wishlist_provider.dart';
 import 'package:pos/theme.dart';
 import 'package:provider/provider.dart';
 
@@ -33,6 +34,8 @@ class _ProductPageState extends State<ProductPage> {
 
   @override
   Widget build(BuildContext context) {
+    WishlistProvider wishlistProvider = Provider.of<WishlistProvider>(context);
+
     Widget indicator(int index) {
       return Container(
         width: currentIndex == index ? 16 : 4,
@@ -176,15 +179,29 @@ class _ProductPageState extends State<ProductPage> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          backgroundColor: secondaryColor,
-                          content: Text(
-                            'Item ditambahkan ke favorit',
-                            textAlign: TextAlign.center,
+                      wishlistProvider.setProduct(widget.product);
+                      if (wishlistProvider.isWishlist(widget.product)) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            backgroundColor: secondaryColor,
+                            content: Text(
+                              'Item ditambahkan ke favorit',
+                              textAlign: TextAlign.center,
+                            ),
                           ),
-                        ),
-                      );
+                        );
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            backgroundColor: alertColor,
+                            content: Text(
+                              'Has been removed from the Wishlist',
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        );
+                      }
+
                       // if (isWishlist) {
                       //   ScaffoldMessenger.of(context).showSnackBar(
                       //     SnackBar(
@@ -208,7 +225,9 @@ class _ProductPageState extends State<ProductPage> {
                       // }
                     },
                     child: Image.asset(
-                      'assets/button_wishlist.png',
+                      wishlistProvider.isWishlist(widget.product)
+                          ? 'assets/button_wishlist_blue.png'
+                          : 'assets/button_wishlist.png',
                       width: 46,
                     ),
                   )

@@ -9,6 +9,7 @@ class AuthServices {
     String? name,
     // required String username,
     String? nopol,
+    String? phone,
     String? password,
   }) async {
     var url = '$baseUrl/register';
@@ -18,6 +19,7 @@ class AuthServices {
       'name': name,
       // 'username': username,
       'nopol': nopol,
+      'phone': phone,
       'password': password,
     });
 

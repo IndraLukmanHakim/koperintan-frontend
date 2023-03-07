@@ -2,6 +2,7 @@ class UserModel {
   int? id;
   String? name;
   String? nopol;
+  String? phone;
   // late String username;
   int? point;
   String? token;
@@ -21,6 +22,7 @@ class UserModel {
     id = json['id'];
     name = json['name'];
     nopol = json['nopol'];
+    phone = json['phone'];
     // username = json['username'];
     profilePhotoUrl = json['profile_photo_url'];
     token = json['token'];
@@ -32,6 +34,7 @@ class UserModel {
       'id': id,
       'name': name,
       'nopol': nopol,
+      'phone': phone,
       // 'username':  username,
       'profile_photo_url': profilePhotoUrl,
       'token': token,

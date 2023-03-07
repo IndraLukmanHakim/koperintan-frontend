@@ -16,7 +16,9 @@ class AuthProvider with ChangeNotifier {
     String? name,
     // // String? username,
     String? nopol,
+    String? phone,
     String? password,
+
     // required String name,
     // // required String username,
     // required String nopol,
@@ -27,6 +29,7 @@ class AuthProvider with ChangeNotifier {
         // there is two type to get the value:
         // 1. can't be null, '' will use as default
         name: name,
+        phone: phone,
         // 2. can't be null, required var value in the first place
         // username: username ?? '',
         nopol: nopol,
@@ -49,7 +52,6 @@ class AuthProvider with ChangeNotifier {
     // // String? username,
     String? nopol,
     String? password,
-    // required String name,
     // // required String username,
     // required String nopol,
     // required String password,

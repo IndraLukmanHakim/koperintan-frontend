@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:pos/models/product_model.dart';
+import 'package:pos/providers/wishlist_provider.dart';
 import 'package:pos/theme.dart';
+import 'package:provider/provider.dart';
 
-class WhistlistCard extends StatelessWidget {
+class WishtlistCard extends StatelessWidget {
   @override
+  final ProductModel product;
+  WishtlistCard(this.product);
   Widget build(BuildContext context) {
+    WishlistProvider wishlistProvider = Provider.of<WishlistProvider>(context);
     return Container(
       margin: EdgeInsets.only(
         top: 20,
@@ -20,9 +26,14 @@ class WhistlistCard extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Image.asset(
-            'assets/button_wishlist_blue.png',
-            width: 34,
+          GestureDetector(
+            onTap: () {
+              wishlistProvider.setProduct(product);
+            },
+            child: Image.asset(
+              'assets/button_wishlist_blue.png',
+              width: 34,
+            ),
           ),
           SizedBox(
             width: 12,
@@ -31,8 +42,8 @@ class WhistlistCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(12),
             child: Container(
               color: primaryTextColor,
-              child: Image.asset(
-                'assets/3 (1).png',
+              child: Image.network(
+                product.galleries![0].url!,
                 width: 60,
               ),
             ),
@@ -45,13 +56,13 @@ class WhistlistCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Beras Medium',
+                  product.name!,
                   style: primaryTextStyle.copyWith(
                     fontWeight: semiBold,
                   ),
                 ),
                 Text(
-                  'Rp. 51.000',
+                  'Rp. ${product.price}',
                   style: priceTextStyle,
                 )
               ],

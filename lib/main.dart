@@ -13,6 +13,7 @@ import 'package:pos/pages/status_order_page.dart';
 import 'package:pos/pages/user.dart';
 import 'package:pos/providers/auth_provider.dart';
 import 'package:pos/providers/product_provider.dart';
+import 'package:pos/providers/wishlist_provider.dart';
 import 'package:pos/theme.dart';
 import 'package:provider/provider.dart';
 
@@ -28,6 +29,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => ProductProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => WishlistProvider(),
         ),
       ],
       child: MaterialApp(
