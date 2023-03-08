@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:pos/pages/widgets/cart_card.dart';
+import 'package:pos/providers/cart_provider.dart';
 import 'package:pos/theme.dart';
+import 'package:provider/provider.dart';
 
 class CartPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    CartProvider cartProvider = Provider.of<CartProvider>(context);
+
     header() {
       return AppBar(
         backgroundColor: backgroundColor1,
@@ -72,12 +76,13 @@ class CartPage extends StatelessWidget {
         padding: EdgeInsets.symmetric(
           horizontal: defaultMargin,
         ),
-        children: [
-          CartCard(),
-          CartCard(),
-          CartCard(),
-          CartCard(),
-        ],
+        children: cartProvider.cartList.map((cart) => CartCard(cart)).toList(),
+        // children: [
+        //   CartCard(),
+        //   CartCard(),
+        //   CartCard(),
+        //   CartCard(),
+        // ],
       );
     }
 
@@ -101,7 +106,7 @@ class CartPage extends StatelessWidget {
                     style: primaryTextStyle,
                   ),
                   Text(
-                    'Rp. 28.000',
+                    'Rp. ${cartProvider.totalPrice()}',
                     style: priceTextStyle.copyWith(
                       fontSize: 16,
                       fontWeight: semiBold,
@@ -164,8 +169,9 @@ class CartPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: backgroundColor3,
       appBar: header(),
-      body: content(),
-      bottomNavigationBar: customBottomNav(),
+      body: cartProvider.cartList.length == 0 ? emptyCart() : content(),
+      bottomNavigationBar:
+          cartProvider.cartList.length == 0 ? SizedBox() : customBottomNav(),
 
       // body: ListView(
       //   children: [

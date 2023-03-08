@@ -1,10 +1,53 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:pos/pages/widgets/checkout_card.dart';
+import 'package:pos/pages/widgets/loading_button.dart';
+import 'package:pos/providers/auth_provider.dart';
+import 'package:pos/providers/cart_provider.dart';
+import 'package:pos/providers/transaction_provider.dart';
 import 'package:pos/theme.dart';
+import 'package:provider/provider.dart';
 
-class CheckoutPage extends StatelessWidget {
+class CheckoutPage extends StatefulWidget {
+  @override
+  State<CheckoutPage> createState() => _CheckoutPageState();
+}
+
+class _CheckoutPageState extends State<CheckoutPage> {
+  bool isLoading = false;
+
+  TextEditingController addressController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    CartProvider cartProvider = Provider.of<CartProvider>(context);
+    TransactionProvider transactionProvider =
+        Provider.of<TransactionProvider>(context);
+    AuthProvider authProvider = Provider.of<AuthProvider>(context);
+
+    handleCheckout() async {
+      setState(() {
+        isLoading = true;
+      });
+
+      if (await transactionProvider.checkout(
+        // BUAT ADDRESS CONTROLLER
+        // 'Jl. Kebon Jeruk No. 1',
+        addressController.text,
+        authProvider.user!.token!,
+        cartProvider.cartList,
+        cartProvider.totalPrice(),
+      )) {
+        cartProvider.carts = [];
+        Navigator.pushNamedAndRemoveUntil(
+            context, '/checkout-success', (route) => false);
+      }
+
+      setState(() {
+        isLoading = false;
+      });
+    }
+
     header() {
       return AppBar(
         backgroundColor: backgroundColor1,
@@ -37,7 +80,14 @@ class CheckoutPage extends StatelessWidget {
                     fontWeight: medium,
                   ),
                 ),
-                CheckoutCard(),
+                // CheckoutCard(),
+                Column(
+                  children: cartProvider.cartList
+                      .map(
+                        (cart) => CheckoutCard(cart),
+                      )
+                      .toList(),
+                ),
               ],
             ),
           ),
@@ -65,63 +115,124 @@ class CheckoutPage extends StatelessWidget {
                 SizedBox(
                   height: 12,
                 ),
-                Row(
-                  children: [
-                    Column(
-                      children: [
-                        Image.asset(
-                          'assets/icon_store_location.png',
-                          width: 40,
+                Container(
+                  margin: EdgeInsets.only(top: 50),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Alamat Lengkap',
+                        style: primaryTextStyle.copyWith(
+                          fontSize: 16,
+                          fontWeight: medium,
                         ),
-                        Image.asset(
-                          'assets/icon_line.png',
-                          height: 30,
+                      ),
+                      SizedBox(
+                        height: 12,
+                      ),
+                      Container(
+                        height: 50,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 16,
                         ),
-                        Image.asset(
-                          'assets/icon_your_address.png',
-                          width: 40,
+                        decoration: BoxDecoration(
+                          color: backgroundColor2,
+                          borderRadius: BorderRadius.circular(12),
                         ),
-                      ],
-                    ),
-                    SizedBox(
-                      width: 12,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Alamat',
-                          style: secondaryTextStyle.copyWith(
-                            fontWeight: light,
-                            fontSize: 12,
-                          ),
-                        ),
-                        Text(
-                          'Jln. Mulawarman RT 99 No. 666',
-                          style: primaryTextStyle.copyWith(
-                            fontWeight: medium,
-                          ),
-                        ),
-                        SizedBox(
-                          height: defaultMargin,
-                        ),
-                        Text(
-                          'Alamat',
-                          style: secondaryTextStyle.copyWith(
-                            fontWeight: light,
-                            fontSize: 12,
-                          ),
-                        ),
-                        Text(
-                          'Jln. Mulawarman RT 99 No. 666',
-                          style: primaryTextStyle.copyWith(
-                            fontWeight: medium,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
+                        child: Center(
+                            child: Row(
+                          children: [
+                            Image.asset(
+                              'assets/icon_your_address.png',
+                              width: 17,
+                            ),
+                            SizedBox(
+                              width: 16,
+                            ),
+                            Expanded(
+                              child: TextFormField(
+                                style: primaryTextStyle,
+                                controller: addressController,
+                                decoration: InputDecoration.collapsed(
+                                  hintText: 'Alamat Lengkap',
+                                  hintStyle: subtitleTextStyle,
+                                ),
+                              ),
+                            ),
+                          ],
+                        )),
+                      )
+                    ],
+                  ),
                 ),
+                // Row(
+                //   children: [
+                //     Column(
+                //       children: [
+                //         // Image.asset(
+                //         //   'assets/icon_store_location.png',
+                //         //   width: 40,
+                //         // ),
+                //         // Image.asset(
+                //         //   'assets/icon_line.png',
+                //         //   height: 30,
+                //         // ),
+                //         Image.asset(
+                //           'assets/icon_your_address.png',
+                //           width: 40,
+                //         ),
+                //       ],
+                //     ),
+                //     SizedBox(
+                //       width: 12,
+                //     ),
+                //     Column(
+                //       // crossAxisAlignment: CrossAxisAlignment.start,
+                //       // children: [
+                //       //   // Text(
+                //       //   //   'Alamat',
+                //       //   //   style: secondaryTextStyle.copyWith(
+                //       //   //     fontWeight: light,
+                //       //   //     fontSize: 12,
+                //       //   //   ),
+                //       //   // ),
+                //       //   // Text(
+                //       //   //   'Jln. Mulawarman RT 99 No. 666',
+                //       //   //   style: primaryTextStyle.copyWith(
+                //       //   //     fontWeight: medium,
+                //       //   //   ),
+                //       //   // ),
+                //       //   SizedBox(
+                //       //     height: defaultMargin,
+                //       //   ),
+                //       //   Text(
+                //       //     'Alamat',
+                //       //     style: secondaryTextStyle.copyWith(
+                //       //       fontWeight: light,
+                //       //       fontSize: 12,
+                //       //     ),
+                //       //   ),
+                //       //   // Text(
+                //       //   //   'Jln. Mulawarman RT 99 No. 666',
+                //       //   //   style: primaryTextStyle.copyWith(
+                //       //   //     fontWeight: medium,
+                //       //   //   ),
+                //       //   // ),
+                //       //   Container(
+                //       //     child: TextFormField(
+                //       //       style: primaryTextStyle,
+                //       //       controller: addressController,
+                //       //       decoration: InputDecoration.collapsed(
+                //       //         hintText: 'Alamat Lengkap',
+                //       //         hintStyle: subtitleTextStyle,
+                //       //       ),
+                //       //     ),
+                //       //   ),
+                //       // ],
+
+                //     ),
+                //   ],
+                // ),
               ],
             ),
           ),
@@ -159,7 +270,8 @@ class CheckoutPage extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      '2 Items',
+                      '${cartProvider.totalItems()} Items',
+                      // '2 Items',
                       style: primaryTextStyle.copyWith(
                         fontWeight: medium,
                       ),
@@ -179,7 +291,7 @@ class CheckoutPage extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      'Rp. 14.000',
+                      'Rp. ${cartProvider.totalPrice()}',
                       style: primaryTextStyle.copyWith(
                         fontWeight: medium,
                       ),
@@ -199,7 +311,7 @@ class CheckoutPage extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      'Free',
+                      'Gratis',
                       style: primaryTextStyle.copyWith(
                         fontWeight: medium,
                       ),
@@ -226,7 +338,7 @@ class CheckoutPage extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      'Rp. 28.000',
+                      'Rp. ${cartProvider.totalPrice()}',
                       style: priceTextStyle.copyWith(
                         fontWeight: semiBold,
                       ),
@@ -245,41 +357,38 @@ class CheckoutPage extends StatelessWidget {
             thickness: 1,
             color: Color(0xff2E3141),
           ),
-          // isLoading
-          //     ?
-          // Container(
-          //         margin: EdgeInsets.only(
-          //           bottom: 30,
-          //         ),
-          //         child: LoadingButton(),
-          //       )
-          //     :
-          Container(
-            height: 50,
-            width: double.infinity,
-            margin: EdgeInsets.symmetric(
-              vertical: defaultMargin,
-            ),
-            child: TextButton(
-              onPressed: () {
-                Navigator.pushNamedAndRemoveUntil(
-                    context, '/checkout-success', (route) => false);
-              },
-              style: TextButton.styleFrom(
-                backgroundColor: primaryColor,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
+          isLoading
+              ? Container(
+                  margin: EdgeInsets.only(
+                    bottom: 30,
+                  ),
+                  child: LoadingButton(),
+                )
+              : Container(
+                  height: 50,
+                  width: double.infinity,
+                  margin: EdgeInsets.symmetric(
+                    vertical: defaultMargin,
+                  ),
+                  child: TextButton(
+                    onPressed: () {
+                      handleCheckout();
+                    },
+                    style: TextButton.styleFrom(
+                      backgroundColor: primaryColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    child: Text(
+                      'Checkout Sekarang',
+                      style: primaryTextStyle.copyWith(
+                        fontSize: 16,
+                        fontWeight: semiBold,
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-              child: Text(
-                'Checkout Sekarang',
-                style: primaryTextStyle.copyWith(
-                  fontSize: 16,
-                  fontWeight: semiBold,
-                ),
-              ),
-            ),
-          ),
         ],
       );
     }

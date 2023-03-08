@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:pos/models/cart_model.dart';
+import 'package:pos/providers/cart_provider.dart';
 import 'package:pos/theme.dart';
 
 class CheckoutCard extends StatelessWidget {
   @override
+  final CartModel cart;
+  CheckoutCard(this.cart);
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(
@@ -24,7 +28,7 @@ class CheckoutCard extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
               image: DecorationImage(
-                image: AssetImage('assets/1.png'),
+                image: NetworkImage(cart.product!.galleries![0].url!),
               ),
               color: backgroundColor6,
             ),
@@ -37,7 +41,8 @@ class CheckoutCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Gula ManisKita',
+                  cart.product!.name!,
+                  // 'Gula ManisKita',
                   style: primaryTextStyle.copyWith(
                     fontWeight: semiBold,
                   ),
@@ -47,7 +52,7 @@ class CheckoutCard extends StatelessWidget {
                   height: 2,
                 ),
                 Text(
-                  'Rp. 28.000',
+                  'Rp. ${cart.product!.price}',
                   style: priceTextStyle,
                 )
               ],
@@ -57,7 +62,7 @@ class CheckoutCard extends StatelessWidget {
             width: 12,
           ),
           Text(
-            '2 Items',
+            '${cart.quantity} item',
             style: secondaryTextStyle.copyWith(
               fontSize: 12,
             ),
