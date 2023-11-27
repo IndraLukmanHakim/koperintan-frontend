@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:pos/models/status_model.dart';
 import 'package:pos/theme.dart';
 
 class StatusCard extends StatelessWidget {
   @override
+  final StatusModel status;
+  StatusCard(this.status);
+
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(
@@ -16,74 +20,106 @@ class StatusCard extends StatelessWidget {
         color: backgroundColor4,
         borderRadius: BorderRadius.circular(12),
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Column(
         children: [
-          // Container(
-          //   width: 60,
-          //   height: 60,
-          //   decoration: BoxDecoration(
-          //     borderRadius: BorderRadius.circular(12),
-          //     image: DecorationImage(
-          //       image: AssetImage('assets/1.png'),
-          //     ),
-          //     color: backgroundColor6,
-          //   ),
-          // ),
-          // SizedBox(
-          //   width: 12,
-          // ),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Jumlah Order : 2 Items',
-                  style: primaryTextStyle.copyWith(
-                    fontWeight: semiBold,
-                  ),
-                  overflow: TextOverflow.ellipsis,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Jumlah Order : ',
+                      style: primaryTextStyle.copyWith(
+                        fontWeight: semiBold,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    SizedBox(
+                      height: 2,
+                    ),
+                    Text(
+                      'Rp. ${status.totalPrice}',
+                      style: priceTextStyle,
+                    )
+                  ],
                 ),
-                SizedBox(
-                  height: 2,
+              ),
+              // SizedBox(
+              //   width: 12,
+              // ),
+              Container(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      'Tanggal Transaksi',
+                      style: primaryTextStyle.copyWith(
+                        fontWeight: semiBold,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    SizedBox(
+                      height: 2,
+                    ),
+                    Text(
+                      '${status.createdAt}',
+                      style: priceTextStyle.copyWith(fontSize: 12),
+                    )
+                  ],
                 ),
-                Text(
-                  'Rp. 28.000',
-                  style: priceTextStyle,
-                )
-              ],
-            ),
+              ),
+            ],
           ),
-          // SizedBox(
-          //   width: 12,
-          // ),
-          Container(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                  'Status',
-                  style: primaryTextStyle.copyWith(
-                    fontWeight: semiBold,
-                  ),
-                  overflow: TextOverflow.ellipsis,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Point yang didapat : ',
+                      style: primaryTextStyle.copyWith(
+                        fontWeight: semiBold,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    SizedBox(
+                      height: 2,
+                    ),
+                    Text(
+                      '${status.point}',
+                      style: priceTextStyle.copyWith(fontSize: 12),
+                    )
+                  ],
                 ),
-                SizedBox(
-                  height: 2,
+              ),
+              Container(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      'status',
+                      style: primaryTextStyle.copyWith(
+                        fontWeight: semiBold,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    SizedBox(
+                      height: 2,
+                    ),
+                    Text(
+                      '${status.status}',
+                      style: priceTextStyle,
+                    )
+                  ],
                 ),
-                Text(
-                  'PENDING',
-                  style: priceTextStyle,
-                )
-              ],
-            ),
+              ),
+            ],
           ),
-          // Text(
-          //   'PENDING',
-          //   style: secondaryTextStyle.copyWith(
-          //     fontSize: 12,
-          //   ),
-          // ),
         ],
       ),
     );

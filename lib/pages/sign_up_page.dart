@@ -42,7 +42,7 @@ class _SignUpPageState extends State<SignUpPage> {
           SnackBar(
             backgroundColor: alertColor,
             content: Text(
-              'Gagal Daftar!, Pastikan Data yang anda masukan benar. Contoh: Nama Lengkap, Nopol: , Password',
+              'Gagal Daftar!, Pastikan Data yang anda masukan benar. Nama Lengkap, Nopol: KT1234KT , Password : 8 Karakter',
               textAlign: TextAlign.center,
             ),
           ),

@@ -24,6 +24,6 @@ class CartModel {
   }
 
   int getTotalPrice() {
-    return product!.price! * quantity!;
+    return product!.price! * quantity;
   }
 }

@@ -1,5 +1,7 @@
+
 import 'package:flutter/material.dart';
 import 'package:pos/pages/widgets/whistlist_card.dart';
+import 'package:pos/providers/page_provider.dart';
 import 'package:pos/providers/wishlist_provider.dart';
 import 'package:pos/theme.dart';
 import 'package:provider/provider.dart';
@@ -7,7 +9,11 @@ import 'package:provider/provider.dart';
 class WhislistPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    WishlistProvider wishlistProvider = Provider.of<WishlistProvider>(context);
+    // WishlistProvider wishlistProvider = Provider.of<WishlistProvider>(context);
+    PageProvider pageProvider = Provider.of<PageProvider>(context);
+    print(Provider.of<WishlistProvider>(context).wishlist.isEmpty);
+
+    // print(wishlistProvider.wishlist.isEmpty);
 
     Widget header() {
       return AppBar(
@@ -58,7 +64,9 @@ class WhislistPage extends StatelessWidget {
             Container(
               height: 44,
               child: TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  pageProvider.currentIndex = 0;
+                },
                 style: TextButton.styleFrom(
                   padding: EdgeInsets.symmetric(
                     horizontal: 24,
@@ -91,11 +99,17 @@ class WhislistPage extends StatelessWidget {
             padding: EdgeInsets.symmetric(
               horizontal: defaultMargin,
             ),
-            children: wishlistProvider.wishlist
+            children: Provider.of<WishlistProvider>(context)
+                .wishlist
                 .map(
                   (prodcut) => WishtlistCard(prodcut),
                 )
                 .toList(),
+            // children: wishlistProvider.wishlist
+            //     .map(
+            //       (prodcut) => WishtlistCard(prodcut),
+            //     )
+            //     .toList(),
           ),
         ),
       );
@@ -144,7 +158,9 @@ class WhislistPage extends StatelessWidget {
       children: [
         header(),
         //
-        wishlistProvider.wishlist.length == 0 ? emptyWishlist() : content(),
+        Provider.of<WishlistProvider>(context).wishlist.isEmpty
+            ? emptyWishlist()
+            : content(),
 
         // customBottomNav(),
       ],

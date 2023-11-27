@@ -1,11 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:pos/pages/widgets/status_card.dart';
+import 'package:pos/providers/transaction_provider.dart';
+import 'package:provider/provider.dart';
 
-import '../theme.dart';
+import '../providers/auth_provider.dart';
+import 'package:pos/theme.dart';
 
 class StatusorderPage extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
+    AuthProvider authProvider = Provider.of<AuthProvider>(context);
+
+    getStatus() async {
+      await Provider.of<TransactionProvider>(context, listen: false)
+          .getStatus(authProvider.user!.token);
+    }
+
+    TransactionProvider transactionProvider =
+        Provider.of<TransactionProvider>(context);
+
     Widget header() {
       return AppBar(
         leading: IconButton(
@@ -42,9 +56,17 @@ class StatusorderPage extends StatelessWidget {
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            StatusCard(),
-          ],
+          // children: [
+
+          //   StatusCard(),
+          // ],
+
+          children: transactionProvider.status
+              .map((id) => StatusCard(id))
+              .toList()
+              .reversed
+              .map((e) => e)
+              .toList(),
         ),
       );
     }

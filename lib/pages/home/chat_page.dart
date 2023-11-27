@@ -1,17 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:pos/providers/auth_provider.dart';
 import 'package:pos/theme.dart';
+import 'package:provider/provider.dart';
 
+import '../../providers/page_provider.dart';
+import '../../providers/transaction_provider.dart';
 import '../widgets/status_card.dart';
 
 class ChatPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    AuthProvider authProvider = Provider.of<AuthProvider>(context);
+    TransactionProvider transactionProvider =
+        Provider.of<TransactionProvider>(context, listen: false);
+    PageProvider pageProvider = Provider.of<PageProvider>(context);
+
     Widget header() {
       return AppBar(
         backgroundColor: backgroundColor1,
         centerTitle: true,
         title: Text(
-          'Pesan',
+          'Status Pesanan',
           style: priceTextStyle.copyWith(
             fontSize: 18,
             fontWeight: medium,
@@ -35,7 +44,7 @@ class ChatPage extends StatelessWidget {
                 width: 80,
                 height: 80,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Text(
@@ -58,7 +67,9 @@ class ChatPage extends StatelessWidget {
               Container(
                 height: 44,
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    pageProvider.currentIndex = 0;
+                  },
                   style: TextButton.styleFrom(
                     padding: EdgeInsets.symmetric(
                       horizontal: 24,
@@ -70,7 +81,7 @@ class ChatPage extends StatelessWidget {
                     ),
                   ),
                   child: Text(
-                    'Explore Store',
+                    'Jelajahi Toko',
                     style: primaryTextStyle.copyWith(
                       fontSize: 16,
                       fontWeight: medium,
@@ -90,20 +101,38 @@ class ChatPage extends StatelessWidget {
         padding: EdgeInsets.symmetric(
           horizontal: defaultMargin,
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            StatusCard(),
-          ],
+        child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            // children: [
+            //   StatusCard(),
+            // ],
+            children: transactionProvider.status
+                .map((id) => StatusCard(id))
+                .toList()
+                .reversed
+                .map((e) => e)
+                .toList(),
+          ),
         ),
       );
     }
 
-    return Column(
-      children: [
-        header(),
-        contentisi(),
-      ],
+    return RefreshIndicator(
+      onRefresh: () async {
+        await transactionProvider.getStatus(authProvider.user!.token);
+        pageProvider.currentIndex = 2;
+      },
+      child: ListView(
+        children: [
+          header(),
+          transactionProvider.status.isEmpty ? content() : contentisi(),
+          SizedBox(
+            height: 15,
+          ),
+        ],
+      ),
     );
   }
 }

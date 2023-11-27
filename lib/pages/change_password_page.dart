@@ -6,10 +6,8 @@ import '../providers/auth_provider.dart';
 
 class EditProfilePage extends StatelessWidget {
   // Define controllers for each TextFormField
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController usernameController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController phoneNumberController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController new_passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +23,7 @@ class EditProfilePage extends StatelessWidget {
         elevation: 0,
         centerTitle: true,
         title: Text(
-          'Edit Profile',
+          'Ganti Password',
         ),
         actions: [
           IconButton(
@@ -39,15 +37,14 @@ class EditProfilePage extends StatelessWidget {
       );
     }
 
-    Widget editProfileButton(BuildContext context) {
+    Widget changePasswordbutton(BuildContext context) {
       final authProvider = Provider.of<AuthProvider>(context);
 
       return ElevatedButton(
         onPressed: () async {
-          bool success = await authProvider.editProfile(
-            name: nameController.text,
-            nopol: usernameController.text,
-            phone: phoneNumberController.text,
+          bool success = await authProvider.changePassword(
+            password: passwordController.text,
+            new_password: new_passwordController.text,
           );
 
           if (success) {
@@ -57,34 +54,49 @@ class EditProfilePage extends StatelessWidget {
             // Profile edit failed, show an error message
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text('Gagal edit profile'),
+                content: Text('Ganti Password Gagal!'),
               ),
             );
           }
         },
-        child: Text('Edit Profile'),
+        child: Text('Ganti Password'),
       );
     }
 
-    Widget nameInput() {
+    Widget passwordInput() {
       return Container(
-        margin: EdgeInsets.only(top: 30),
+        margin: EdgeInsets.only(
+          top: defaultMargin,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Nama',
-              style: secondaryTextStyle.copyWith(
-                fontSize: 13,
+              'Password Lama',
+              style: primaryTextStyle.copyWith(
+                fontSize: 16,
+                fontWeight: medium,
               ),
             ),
+            SizedBox(
+              height: 12,
+            ),
             TextFormField(
-              controller: nameController, // Assign the controller
-              style: primaryTextStyle,
+              controller: passwordController,
+              obscureText: true,
               decoration: InputDecoration(
-                hintText: 'Nama',
-                hintStyle: primaryTextStyle,
-                enabledBorder: UnderlineInputBorder(
+                hintText: 'Masukkan Password Lama',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: BorderSide(
+                    color: primaryColor,
+                  ),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
                   borderSide: BorderSide(
                     color: subtitleColor,
                   ),
@@ -96,65 +108,45 @@ class EditProfilePage extends StatelessWidget {
       );
     }
 
-    Widget usernameInput() {
+    Widget new_passwordInput() {
       return Container(
         margin: EdgeInsets.only(
-          top: 30,
+          top: defaultMargin,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Nomor Polisi',
-              style: secondaryTextStyle.copyWith(
-                fontSize: 13,
+              'Password Baru',
+              style: primaryTextStyle.copyWith(
+                fontSize: 16,
+                fontWeight: medium,
               ),
             ),
+            SizedBox(
+              height: 12,
+            ),
             TextFormField(
-              controller: usernameController, // Assign the controller
-              style: primaryTextStyle,
+              controller: new_passwordController,
+              obscureText: true,
               decoration: InputDecoration(
-                hintText: 'KT-1234-JR',
-                hintStyle: primaryTextStyle,
-                enabledBorder: UnderlineInputBorder(
+                hintText: 'Masukkan Password Baru',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: BorderSide(
+                    color: primaryColor,
+                  ),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
                   borderSide: BorderSide(
                     color: subtitleColor,
                   ),
                 ),
               ),
-            ),
-          ],
-        ),
-      );
-    }
-
-    Widget phoneNumberInput() {
-      return Container(
-        margin: EdgeInsets.only(
-          top: 30,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Nomor Handphone',
-              style: secondaryTextStyle.copyWith(
-                fontSize: 13,
-              ),
-            ),
-            TextFormField(
-              controller: phoneNumberController, // Assign the controller
-              style: primaryTextStyle,
-              decoration: InputDecoration(
-                hintText: 'Nomor Handphone',
-                hintStyle: primaryTextStyle,
-                enabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    color: subtitleColor,
-                  ),
-                ),
-              ),
-              keyboardType: TextInputType.phone,
             ),
           ],
         ),
@@ -184,13 +176,13 @@ class EditProfilePage extends StatelessWidget {
                 ),
               ),
             ),
-            nameInput(),
-            usernameInput(),
+            passwordInput(),
+
+            new_passwordInput(),
             // emailInput(),
-            phoneNumberInput(), // Add the phone number input field
 
             // add the button
-            editProfileButton(context),
+            changePasswordbutton(context),
           ],
         ),
       );

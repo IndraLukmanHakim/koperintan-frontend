@@ -1,6 +1,9 @@
+// import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:pos/providers/page_provider.dart';
 import 'package:pos/theme.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../models/user_model.dart';
 import '../../providers/auth_provider.dart';
@@ -8,6 +11,7 @@ import '../../providers/auth_provider.dart';
 class ProfilPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    PageProvider pageProvider = Provider.of<PageProvider>(context);
     AuthProvider authProvider = Provider.of<AuthProvider>(context);
     UserModel? user = authProvider.user;
 
@@ -37,14 +41,14 @@ class ProfilPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Hallo, ${user!.name}!',
+                        'Hallo, ${user?.name}!',
                         style: primaryTextStyle.copyWith(
                           fontSize: 24,
                           fontWeight: semiBold,
                         ),
                       ),
                       Text(
-                        'Point anda: ${user.point}',
+                        'Point anda: ${user?.point}',
                         style: subtitleTextStyle.copyWith(
                           fontSize: 16,
                         ),
@@ -54,6 +58,8 @@ class ProfilPage extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
+                    authProvider.logout(authProvider.user!.token!);
+                    print(authProvider.user!.token!);
                     Navigator.pushNamedAndRemoveUntil(
                         context, '/sign-in', (route) => false);
                   },
@@ -88,6 +94,23 @@ class ProfilPage extends StatelessWidget {
       );
     }
 
+    _launchWhatsapp() async {
+      var text = "Hello,  " +
+          " Saya ${authProvider.user?.name} dengan nopol ${authProvider.user?.nopol} ingin bertanya mengenai produk yang saya beli melalui aplikasi Koper Intan";
+      var whatsapp = "6285171701900";
+      var whatsappAndroid =
+          Uri.parse("whatsapp://send?phone=$whatsapp&text=$text");
+      if (await canLaunchUrl(whatsappAndroid)) {
+        await launchUrl(whatsappAndroid);
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("WhatsApp is not installed on the device"),
+          ),
+        );
+      }
+    }
+
     Widget content() {
       return Expanded(
           child: Container(
@@ -118,29 +141,34 @@ class ProfilPage extends StatelessWidget {
                 Navigator.pushNamed(context, '/status-order');
               },
               child: menuItem(
-                'Your Orders',
+                'Pesanan Anda',
               ),
             ),
-            menuItem(
-              'Help',
+            GestureDetector(
+              onTap: () {
+                _launchWhatsapp();
+              },
+              child: menuItem(
+                'Help',
+              ),
             ),
             SizedBox(
               height: 30,
             ),
-            Text(
-              'General',
-              style:
-                  primaryTextStyle.copyWith(fontSize: 16, fontWeight: semiBold),
-            ),
-            menuItem(
-              'Privacy & Policy',
-            ),
-            menuItem(
-              'Term of Service',
-            ),
-            menuItem(
-              'Contact',
-            ),
+            // Text(
+            //   'General',
+            //   style:
+            //       primaryTextStyle.copyWith(fontSize: 16, fontWeight: semiBold),
+            // ),
+            // menuItem(
+            // 'Privacy & Policy',
+            // ),
+            // // menuItem(
+            //   'Term of Service',
+            // ),
+            // menuItem(
+            //   'Contact',
+            // ),
           ],
         ),
       ));

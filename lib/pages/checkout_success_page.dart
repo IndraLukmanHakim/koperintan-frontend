@@ -1,10 +1,30 @@
-import 'package:flutter/material.dart';
-import 'package:pos/theme.dart';
+// import 'dart:js';
 
-class CheckoutSuccessPage extends StatelessWidget {
+import 'package:flutter/material.dart';
+import 'package:pos/providers/page_provider.dart';
+import 'package:pos/theme.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/auth_provider.dart';
+import '../providers/transaction_provider.dart';
+
+class CheckoutSuccessPage extends StatefulWidget {
+  @override
+  State<CheckoutSuccessPage> createState() => _CheckoutSuccessPageState();
+}
+
+class _CheckoutSuccessPageState extends State<CheckoutSuccessPage> {
   @override
   Widget build(BuildContext context) {
+    PageProvider pageprovider = Provider.of<PageProvider>(context);
+    AuthProvider authProvider =
+        Provider.of<AuthProvider>(context, listen: false);
     // Widget
+    getstatus() async {
+      await Provider.of<TransactionProvider>(context, listen: false)
+          .getStatus(authProvider.user!.token);
+    }
+
     header() {
       return AppBar(
         backgroundColor: backgroundColor1,
@@ -51,6 +71,7 @@ class CheckoutSuccessPage extends StatelessWidget {
               ),
               child: TextButton(
                 onPressed: () {
+                  pageprovider.currentIndex = 0;
                   Navigator.pushNamedAndRemoveUntil(
                       context, '/home', (route) => false);
                 },
@@ -61,7 +82,7 @@ class CheckoutSuccessPage extends StatelessWidget {
                   ),
                 ),
                 child: Text(
-                  'Pemesanan Berhasil!',
+                  'Kembali Ke Home',
                   style: primaryTextStyle.copyWith(
                     fontSize: 16,
                     fontWeight: medium,
@@ -76,7 +97,9 @@ class CheckoutSuccessPage extends StatelessWidget {
                 top: 12,
               ),
               child: TextButton(
-                onPressed: () {
+                onPressed: () async {
+                  getstatus();
+                  pageprovider.currentIndex = 0;
                   Navigator.pushNamed(context, '/status-order');
                 },
                 style: TextButton.styleFrom(
@@ -86,7 +109,7 @@ class CheckoutSuccessPage extends StatelessWidget {
                   ),
                 ),
                 child: Text(
-                  'Pesanan Saya',
+                  'Lihat Status Pesanan',
                   style: primaryTextStyle.copyWith(
                     fontSize: 16,
                     fontWeight: medium,

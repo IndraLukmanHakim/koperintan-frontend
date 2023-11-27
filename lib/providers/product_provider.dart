@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pos/models/product_model.dart';
 
-import '../models/category_model.dart';
-import '../models/gallery_model.dart';
 import '../services/product_service.dart';
 
 class ProductProvider with ChangeNotifier {

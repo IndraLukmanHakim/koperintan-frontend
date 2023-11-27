@@ -35,19 +35,25 @@ class ProductCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
-              height: 30,
-            ),
-            Image.network(
-              // 'assets/1.png',
-              product.galleries![0].url!,
-              // "https://images.tokopedia.net/img/cache/500-square/product-1/2020/4/15/786685433/786685433_c6b664a9-dea0-41ec-867f-577b4e0544de_715_715.jpg",
-              width: 215,
-              height: 150,
-              fit: BoxFit.cover,
+            // SizedBox(
+            //   height: 0,
+            // ),
+            ClipRRect(
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(20),
+                topRight: Radius.circular(20),
+              ),
+              child: Image.network(
+                // 'assets/1.png',
+                product.galleries![0].url!,
+                // "https://images.tokopedia.net/img/cache/500-square/product-1/2020/4/15/786685433/786685433_c6b664a9-dea0-41ec-867f-577b4e0544de_715_715.jpg",
+                width: 215,
+                height: 150,
+                fit: BoxFit.cover,
+              ),
             ),
             Container(
-              margin: EdgeInsets.symmetric(
+              margin: const EdgeInsets.symmetric(
                 horizontal: 20,
               ),
               child: Column(
@@ -59,7 +65,7 @@ class ProductCard extends StatelessWidget {
                       fontSize: 12,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 6,
                   ),
                   Text(

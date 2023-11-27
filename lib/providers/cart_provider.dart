@@ -56,9 +56,17 @@ class CartProvider with ChangeNotifier {
   }
 
   totalPrice() {
-    double total = 0;
+    int total = 0;
     for (var item in _cartList) {
       total += item.product!.price! * item.quantity!;
+    }
+    return total;
+  }
+
+  totalPoint() {
+    int total = 0;
+    for (var item in _cartList) {
+      total += item.product!.point! * item.quantity!;
     }
     return total;
   }

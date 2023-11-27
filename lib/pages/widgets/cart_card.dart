@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:pos/models/cart_model.dart';
 import 'package:pos/providers/cart_provider.dart';
+import 'package:pos/providers/product_provider.dart';
 import 'package:pos/theme.dart';
 import 'package:provider/provider.dart';
 
@@ -11,6 +12,7 @@ class CartCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ProductProvider productProvider = Provider.of<ProductProvider>(context);
     CartProvider cartProvider = Provider.of<CartProvider>(context);
     return Container(
       margin: EdgeInsets.only(
@@ -34,7 +36,7 @@ class CartCard extends StatelessWidget {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
                   image: DecorationImage(
-                    image: AssetImage('assets/1.png'),
+                    image: NetworkImage(cart.product!.galleries![0].url!),
                   ),
                   color: backgroundColor6,
                 ),

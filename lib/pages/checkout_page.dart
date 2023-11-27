@@ -1,4 +1,3 @@
-import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:pos/pages/widgets/checkout_card.dart';
@@ -30,17 +29,31 @@ class _CheckoutPageState extends State<CheckoutPage> {
         isLoading = true;
       });
 
-      if (await transactionProvider.checkout(
-        // BUAT ADDRESS CONTROLLER
-        // 'Jl. Kebon Jeruk No. 1',
-        addressController.text,
-        authProvider.user!.token!,
-        cartProvider.cartList,
-        cartProvider.totalPrice(),
-      )) {
+      String adrress = addressController.text;
+
+      if (adrress.isNotEmpty &&
+          await transactionProvider.checkout(
+            // BUAT ADDRESS CONTROLLER
+            // 'Jl. Kebon Jeruk No. 1',
+            adrress,
+            authProvider.user!.token!,
+            cartProvider.cartList,
+            cartProvider.totalPrice(),
+            cartProvider.totalPoint(),
+          )) {
         cartProvider.carts = [];
         Navigator.pushNamedAndRemoveUntil(
             context, '/checkout-success', (route) => false);
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: alertColor,
+            content: const Text(
+              'Gagal Checkout! Masukkan Alamat Lengkap \n Contoh : Jl. Mulawarman RT. 99 No. 666',
+              textAlign: TextAlign.center,
+            ),
+          ),
+        );
       }
 
       setState(() {
@@ -105,16 +118,16 @@ class _CheckoutPageState extends State<CheckoutPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'Detail Alamat',
-                  style: primaryTextStyle.copyWith(
-                    fontSize: 16,
-                    fontWeight: medium,
-                  ),
-                ),
-                SizedBox(
-                  height: 12,
-                ),
+                // Text(
+                //   'Detail Alamat',
+                //   style: primaryTextStyle.copyWith(
+                //     fontSize: 16,
+                //     fontWeight: medium,
+                //   ),
+                // ),
+                // SizedBox(
+                //   height: 12,
+                // ),
                 Container(
                   margin: EdgeInsets.only(top: 50),
                   child: Column(
@@ -142,19 +155,19 @@ class _CheckoutPageState extends State<CheckoutPage> {
                         child: Center(
                             child: Row(
                           children: [
-                            Image.asset(
-                              'assets/icon_your_address.png',
-                              width: 17,
-                            ),
-                            SizedBox(
-                              width: 16,
-                            ),
+                            // Image.asset(
+                            //   'assets/icon_your_address.png',
+                            //   width: 17,
+                            // ),
+                            // SizedBox(
+                            //   width: 16,
+                            // ),
                             Expanded(
                               child: TextFormField(
                                 style: primaryTextStyle,
                                 controller: addressController,
                                 decoration: InputDecoration.collapsed(
-                                  hintText: 'Alamat Lengkap',
+                                  hintText: 'Jl. Mulawarman RT. 99 No. 666',
                                   hintStyle: subtitleTextStyle,
                                 ),
                               ),
@@ -292,6 +305,26 @@ class _CheckoutPageState extends State<CheckoutPage> {
                     ),
                     Text(
                       'Rp. ${cartProvider.totalPrice()}',
+                      style: primaryTextStyle.copyWith(
+                        fontWeight: medium,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 12,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Point yang akan didapatkan',
+                      style: secondaryTextStyle.copyWith(
+                        fontSize: 12,
+                      ),
+                    ),
+                    Text(
+                      '${cartProvider.totalPoint()}',
                       style: primaryTextStyle.copyWith(
                         fontWeight: medium,
                       ),

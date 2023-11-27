@@ -3,20 +3,71 @@ import 'package:flutter/rendering.dart';
 import 'package:pos/models/user_model.dart';
 import 'package:pos/pages/widgets/product_tile.dart';
 import 'package:pos/providers/auth_provider.dart';
+import 'package:pos/providers/category_provider.dart';
+import 'package:pos/providers/page_provider.dart';
 import 'package:pos/providers/product_provider.dart';
+import 'package:pos/providers/wishlist_provider.dart';
 import 'package:pos/theme.dart';
 import 'package:pos/pages/widgets/product_card.dart';
 import 'package:provider/provider.dart';
 import 'package:pos/models/product_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class HomePage extends StatelessWidget {
+import '../../providers/transaction_provider.dart';
+import '../widgets/category_tile.dart';
+
+class HomePage extends StatefulWidget {
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    getInit();
+
+    super.initState();
+  }
+
+  getInit() async {
+    await Provider.of<ProductProvider>(context, listen: false).getProducts();
+
+    await Provider.of<CategoryProvider>(context, listen: false)
+        .getCategoryList();
+
+    // await Provider.of<WishlistProvider>(context, listen: false).loadWishlist();
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.reload();
+
+    print(
+        'Wishlist on startup: ${await Provider.of<WishlistProvider>(context, listen: false).wishlist}');
+    print(prefs.getString('token'));
+    print(prefs.getString('wishlist'));
+    print(prefs.containsKey('token'));
+  }
+
+  bool isLoading = false;
+
   @override
   Widget build(BuildContext context) {
+    PageProvider pageProvider = Provider.of<PageProvider>(context);
     AuthProvider authProvider = Provider.of<AuthProvider>(context);
     UserModel? user = authProvider.user;
 
     ProductProvider productProvider = Provider.of<ProductProvider>(context);
-    // List<ProductModel>? product = productProvider.products;
+    CategoryProvider categoryProvider = Provider.of<CategoryProvider>(context);
+
+    handlecategories(int index) async {
+      setState(() {
+        isLoading = true;
+      });
+      categoryProvider.selectCategory = index;
+
+      setState(() {
+        isLoading = false;
+      });
+    }
 
     Widget header() {
       return Container(
@@ -35,14 +86,15 @@ class HomePage extends StatelessWidget {
                   ),
                   Text(
                     "Poin anda : ${user.point}",
-                    style: subtitleTextStyle.copyWith(fontSize: 16),
+                    style: subtitleTextStyle.copyWith(
+                        fontSize: 16, color: primaryTextColor),
                   )
                 ],
               ),
             ),
             GestureDetector(
               onTap: () {
-                Navigator.pushNamed(context, '/profile');
+                pageProvider.currentIndex = 3;
               },
               child: Container(
                 width: 54,
@@ -82,108 +134,17 @@ class HomePage extends StatelessWidget {
     Widget categories() {
       return Container(
         margin: EdgeInsets.only(
+          left: defaultMargin,
           top: defaultMargin,
         ),
         child: SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
-            children: [
-              SizedBox(
-                width: defaultMargin,
-              ),
-              Container(
-                  padding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-                  margin: EdgeInsets.only(right: 16),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    color: primaryColor,
-                  ),
-                  child: Text(
-                    'Beras Medium',
-                    style: primaryTextStyle.copyWith(
-                        fontSize: 13, fontWeight: medium),
-                  )),
-              Container(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 10,
-                ),
-                margin: EdgeInsets.only(right: 16),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(
-                    color: subtitleColor,
-                  ),
-                  color: transparentColor,
-                ),
-                child: Text(
-                  'Beras Premium',
-                  style: subtitleTextStyle.copyWith(
-                    fontSize: 13,
-                    fontWeight: medium,
-                  ),
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 10,
-                ),
-                margin: EdgeInsets.only(right: 16),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(
-                    color: subtitleColor,
-                  ),
-                  color: transparentColor,
-                ),
-                child: Text(
-                  'Gula',
-                  style: subtitleTextStyle.copyWith(
-                    fontSize: 13,
-                    fontWeight: medium,
-                  ),
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 10,
-                ),
-                margin: EdgeInsets.only(right: 16),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(
-                    color: subtitleColor,
-                  ),
-                  color: transparentColor,
-                ),
-                child: Text(
-                  'Minyak Goreng',
-                  style: subtitleTextStyle.copyWith(
-                    fontSize: 13,
-                    fontWeight: medium,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      );
-    }
-
-    Widget popularProductsTitle() {
-      return Container(
-        margin: EdgeInsets.only(
-          top: defaultMargin,
-          left: defaultMargin,
-          right: defaultMargin,
-        ),
-        child: Text(
-          'Popular Products',
-          style: primaryTextStyle.copyWith(
-            fontSize: 22,
-            fontWeight: semiBold,
+            children: categoryProvider.categoryLists
+                .map(
+                  (categoryList) => CategoryTile(categoryList),
+                )
+                .toList(),
           ),
         ),
       );
@@ -200,24 +161,25 @@ class HomePage extends StatelessWidget {
                 width: defaultMargin,
               ),
               Row(
-                  children: productProvider.products
-                      .map(
-                        (product) => ProductCard(product),
-                      )
-                      .toList()
+                // category set to current category
 
-                  // children: [
-                  //   // Text(
-                  //   //   'Ini tempat popular product',
-                  //   //   style: primaryTextStyle.copyWith(fontWeight: bold),
-                  //   // ),
-                  //   ProductCard(),
-                  //   ProductCard(),
-                  //   ProductCard(),
-                  //   ProductCard(),
-                  //   ProductCard(),
-                  // ],
-                  )
+                children: categoryProvider.selectCategory == 0
+                    ? productProvider.products
+                        .map(
+                          (product) => ProductCard(product),
+                        )
+                        .toList()
+                    : productProvider.products
+                        .where((product) =>
+                            product.category!.id ==
+                            categoryProvider.selectCategory)
+                        .map(
+                          (product) => ProductCard(product),
+                        )
+                        .toList(),
+
+                // ],
+              ),
             ]),
           ));
     }
@@ -230,7 +192,7 @@ class HomePage extends StatelessWidget {
           right: defaultMargin,
         ),
         child: Text(
-          'New Arrivals',
+          'Produk Baru',
           style: primaryTextStyle.copyWith(
             fontSize: 22,
             fontWeight: semiBold,
@@ -250,32 +212,32 @@ class HomePage extends StatelessWidget {
                 (product) => ProductTile(product),
               )
               .toList(),
-
-          // children: [
-          //   // Text(
-          //   //   'Ini Tempat kotak kotak untuk product arrivals',
-          //   //   style: primaryTextStyle.copyWith(fontWeight: bold),
-          //   // ),
-          //   ProductTile(),
-          //   ProductTile(),
-          //   ProductTile(),
-          //   ProductTile(),
-          //   ProductTile(),
-          // ],
         ),
       );
     }
 
-    return ListView(
-      children: [
-        header(),
-        CategoriesTittle(),
-        categories(),
-        popularProductsTitle(),
-        popularProducts(),
-        newArrivalsTitle(),
-        newArrivals(),
-      ],
+    getStatus() async {
+      await Provider.of<TransactionProvider>(context, listen: false)
+          .getStatus(authProvider.user!.token);
+      await authProvider.updateuser(authProvider.user!.token);
+    }
+
+    return RefreshIndicator(
+      onRefresh: () async {
+        await Future.delayed(const Duration(milliseconds: 200));
+        getStatus();
+        pageProvider.currentIndex = 0;
+      },
+      child: ListView(
+        children: [
+          header(),
+          CategoriesTittle(),
+          categories(),
+          popularProducts(),
+          newArrivalsTitle(),
+          newArrivals(),
+        ],
+      ),
     );
   }
 }

@@ -29,18 +29,16 @@ class _SignInPageState extends State<SignInPage> {
         isLoading = true;
       });
       if (await authProvider.login(
-        // name: nameController.text,
-        // username: usernameController.text,
         nopol: nopolController.text,
         password: passwordController.text,
       )) {
-        Navigator.pushNamed(context, '/home');
+        Navigator.pushReplacementNamed(context, '/home');
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             backgroundColor: alertColor,
             content: Text(
-              'Gagal Masuk!',
+              'Gagal Masuk!!',
               textAlign: TextAlign.center,
             ),
           ),

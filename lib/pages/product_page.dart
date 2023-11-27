@@ -6,6 +6,8 @@ import 'package:pos/providers/product_provider.dart';
 import 'package:pos/providers/wishlist_provider.dart';
 import 'package:pos/theme.dart';
 import 'package:provider/provider.dart';
+// import badges
+import 'package:badges/badges.dart' as badges;
 
 class ProductPage extends StatefulWidget {
   final ProductModel product;
@@ -71,7 +73,7 @@ class _ProductPageState extends State<ProductPage> {
                     height: 12,
                   ),
                   Text(
-                    'Hurray :)',
+                    'Selamat!',
                     style: primaryTextStyle.copyWith(
                       fontSize: 18,
                       fontWeight: semiBold,
@@ -81,7 +83,7 @@ class _ProductPageState extends State<ProductPage> {
                     height: 12,
                   ),
                   Text(
-                    'Item added successfully',
+                    'Berhasil ditambahkan ke keranjang',
                     style: secondaryTextStyle,
                   ),
                   SizedBox(
@@ -101,7 +103,7 @@ class _ProductPageState extends State<ProductPage> {
                         ),
                       ),
                       child: Text(
-                        'View My Cart',
+                        'Lihat Keranjang',
                         style: primaryTextStyle.copyWith(
                           fontSize: 16,
                           fontWeight: medium,
@@ -168,11 +170,23 @@ class _ProductPageState extends State<ProductPage> {
                     child: Icon(Icons.chevron_left)),
                 GestureDetector(
                   onTap: () {
-                    Navigator.pushNamed(context, '/checkout');
+                    Navigator.pushNamed(context, '/cart');
                   },
-                  child: Icon(
-                    Icons.shopping_bag,
-                    color: backgroundColor1,
+                  child: badges.Badge(
+                    showBadge: cartProvider.totalItems() == 0 ? false : true,
+                    badgeContent: cartProvider.totalItems() == 0
+                        ? null
+                        : Text(
+                            cartProvider.totalItems().toString(),
+                            style: primaryTextStyle.copyWith(
+                              fontSize: 10,
+                              fontWeight: medium,
+                            ),
+                          ),
+                    child: Icon(
+                      Icons.shopping_bag,
+                      color: backgroundColor1,
+                    ),
                   ),
                 )
               ],
@@ -260,6 +274,8 @@ class _ProductPageState extends State<ProductPage> {
                   ),
                   GestureDetector(
                     onTap: () {
+                      print(
+                          'Wishlist on startup: ${wishlistProvider.wishlist}');
                       wishlistProvider.setProduct(widget.product);
                       if (wishlistProvider.isWishlist(widget.product)) {
                         ScaffoldMessenger.of(context).showSnackBar(
@@ -282,28 +298,6 @@ class _ProductPageState extends State<ProductPage> {
                           ),
                         );
                       }
-
-                      // if (isWishlist) {
-                      //   ScaffoldMessenger.of(context).showSnackBar(
-                      //     SnackBar(
-                      //       backgroundColor: secondaryColor,
-                      //       content: Text(
-                      //         'Item ditambahkan ke favorit',
-                      //         textAlign: TextAlign.center,
-                      //       ),
-                      //     ),
-                      //   );
-                      // } else {
-                      //   ScaffoldMessenger.of(context).showSnackBar(
-                      //     SnackBar(
-                      //       backgroundColor: alertColor,
-                      //       content: Text(
-                      //         'Has been removed from the Wishlist',
-                      //         textAlign: TextAlign.center,
-                      //       ),
-                      //     ),
-                      //   );
-                      // }
                     },
                     child: Image.asset(
                       wishlistProvider.isWishlist(widget.product)
@@ -345,6 +339,35 @@ class _ProductPageState extends State<ProductPage> {
                 ],
               ),
             ),
+            Container(
+              padding: EdgeInsets.all(16),
+              width: double.infinity,
+              margin: EdgeInsets.only(
+                top: 20,
+                left: defaultMargin,
+                right: defaultMargin,
+              ),
+              decoration: BoxDecoration(
+                color: backgroundColor2,
+                borderRadius: BorderRadius.circular(4),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Total Point yang akan didapatkan ',
+                    style: secondaryTextStyle,
+                  ),
+                  Text(
+                    'Rp. ${widget.product.point!}',
+                    style: secondaryTextStyle.copyWith(
+                      fontSize: 13,
+                      fontWeight: semiBold,
+                    ),
+                  )
+                ],
+              ),
+            ),
             // BOX CONTAINER DESCRIPTION
             Container(
               width: double.infinity,
@@ -376,46 +399,10 @@ class _ProductPageState extends State<ProductPage> {
                 ],
               ),
             ),
-            // FAMILIAR CARD CONTAINER
-            Container(
-              width: double.infinity,
-              margin: EdgeInsets.only(
-                top: defaultMargin,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: defaultMargin,
-                    ),
-                    child: Text(
-                      'Mungkin Anda Tertarik',
-                      style: primaryTextStyle.copyWith(
-                        fontWeight: medium,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 12,
-                  ),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: familiar.map((image) {
-                        index++;
-                        return Container(
-                          margin: EdgeInsets.only(
-                              left: index == 0 ? defaultMargin : 0),
-                          child: familiarcard(image),
-                        );
-                      }).toList(),
-                    ),
-                  ),
-                ],
-              ),
-            ),
 
+            SizedBox(
+              height: defaultMargin,
+            ),
             // BUTTON CONTAINER
             Container(
               width: double.infinity,
