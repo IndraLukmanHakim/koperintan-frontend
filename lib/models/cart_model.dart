@@ -11,7 +11,7 @@ class CartModel {
     id = json['id'];
     quantity = json['quantity'];
     product = json['product'] != null
-        ? new ProductModel.fromJson(json['product'])
+        ? ProductModel.fromJson(json['product'])
         : null;
   }
 

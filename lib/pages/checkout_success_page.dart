@@ -9,6 +9,8 @@ import '../providers/auth_provider.dart';
 import '../providers/transaction_provider.dart';
 
 class CheckoutSuccessPage extends StatefulWidget {
+  const CheckoutSuccessPage({super.key});
+
   @override
   State<CheckoutSuccessPage> createState() => _CheckoutSuccessPageState();
 }
@@ -29,7 +31,7 @@ class _CheckoutSuccessPageState extends State<CheckoutSuccessPage> {
       return AppBar(
         backgroundColor: backgroundColor1,
         centerTitle: true,
-        title: Text(
+        title: const Text(
           'Checkout Success',
         ),
         elevation: 0,
@@ -45,7 +47,7 @@ class _CheckoutSuccessPageState extends State<CheckoutSuccessPage> {
               'assets/icon_empty_cart.png',
               width: 80,
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Text(
@@ -55,7 +57,7 @@ class _CheckoutSuccessPageState extends State<CheckoutSuccessPage> {
                 fontWeight: medium,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 12,
             ),
             Text(
@@ -93,7 +95,7 @@ class _CheckoutSuccessPageState extends State<CheckoutSuccessPage> {
             Container(
               width: 196,
               height: 44,
-              margin: EdgeInsets.only(
+              margin: const EdgeInsets.only(
                 top: 12,
               ),
               child: TextButton(
@@ -103,7 +105,7 @@ class _CheckoutSuccessPageState extends State<CheckoutSuccessPage> {
                   Navigator.pushNamed(context, '/status-order');
                 },
                 style: TextButton.styleFrom(
-                  backgroundColor: Color(0xff39374B),
+                  backgroundColor: const Color(0xff39374B),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -113,7 +115,7 @@ class _CheckoutSuccessPageState extends State<CheckoutSuccessPage> {
                   style: primaryTextStyle.copyWith(
                     fontSize: 16,
                     fontWeight: medium,
-                    color: Color(0xffB7B6BF),
+                    color: const Color(0xffB7B6BF),
                   ),
                 ),
               ),

@@ -2,7 +2,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:pos/models/product_model.dart';
 import 'package:pos/providers/cart_provider.dart';
-import 'package:pos/providers/product_provider.dart';
 import 'package:pos/providers/wishlist_provider.dart';
 import 'package:pos/theme.dart';
 import 'package:provider/provider.dart';
@@ -11,7 +10,7 @@ import 'package:badges/badges.dart' as badges;
 
 class ProductPage extends StatefulWidget {
   final ProductModel product;
-  ProductPage(this.product);
+  const ProductPage(this.product, {super.key});
   @override
   State<ProductPage> createState() => _ProductPageState();
 }
@@ -43,7 +42,7 @@ class _ProductPageState extends State<ProductPage> {
     Future<void> showSuccessDialog() async {
       return showDialog(
         context: context,
-        builder: (BuildContext context) => Container(
+        builder: (BuildContext context) => SizedBox(
           width: MediaQuery.of(context).size.width - (2 * defaultMargin),
           child: AlertDialog(
             backgroundColor: backgroundColor3,
@@ -69,7 +68,7 @@ class _ProductPageState extends State<ProductPage> {
                     'assets/icon_success.png',
                     width: 100,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 12,
                   ),
                   Text(
@@ -79,17 +78,17 @@ class _ProductPageState extends State<ProductPage> {
                       fontWeight: semiBold,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 12,
                   ),
                   Text(
                     'Berhasil ditambahkan ke keranjang',
                     style: secondaryTextStyle,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
-                  Container(
+                  SizedBox(
                     width: 154,
                     height: 44,
                     child: TextButton(
@@ -123,12 +122,12 @@ class _ProductPageState extends State<ProductPage> {
       return Container(
         width: currentIndex == index ? 16 : 4,
         height: 4,
-        margin: EdgeInsets.symmetric(
+        margin: const EdgeInsets.symmetric(
           horizontal: 2,
         ),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: currentIndex == index ? primaryColor : Color(0xffC4C4C4),
+          color: currentIndex == index ? primaryColor : const Color(0xffC4C4C4),
         ),
       );
     }
@@ -137,7 +136,7 @@ class _ProductPageState extends State<ProductPage> {
       return Container(
         width: 54,
         height: 54,
-        margin: EdgeInsets.only(
+        margin: const EdgeInsets.only(
           right: 16,
         ),
         decoration: BoxDecoration(
@@ -167,7 +166,7 @@ class _ProductPageState extends State<ProductPage> {
                     onTap: () {
                       Navigator.pop(context);
                     },
-                    child: Icon(Icons.chevron_left)),
+                    child: const Icon(Icons.chevron_left)),
                 GestureDetector(
                   onTap: () {
                     Navigator.pushNamed(context, '/cart');
@@ -211,7 +210,7 @@ class _ProductPageState extends State<ProductPage> {
                   });
                 }),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Row(
@@ -230,11 +229,11 @@ class _ProductPageState extends State<ProductPage> {
 
       return Container(
         width: double.infinity,
-        margin: EdgeInsets.only(
+        margin: const EdgeInsets.only(
           top: 17,
         ),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.vertical(
+          borderRadius: const BorderRadius.vertical(
             top: Radius.circular(24),
           ),
           color: backgroundColor1,
@@ -281,7 +280,7 @@ class _ProductPageState extends State<ProductPage> {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             backgroundColor: secondaryColor,
-                            content: Text(
+                            content: const Text(
                               'Item ditambahkan ke favorit',
                               textAlign: TextAlign.center,
                             ),
@@ -291,7 +290,7 @@ class _ProductPageState extends State<ProductPage> {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             backgroundColor: alertColor,
-                            content: Text(
+                            content: const Text(
                               'Has been removed from the Wishlist',
                               textAlign: TextAlign.center,
                             ),
@@ -311,7 +310,7 @@ class _ProductPageState extends State<ProductPage> {
             ),
             // BOX CONTAINER PRICE
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               width: double.infinity,
               margin: EdgeInsets.only(
                 top: 20,
@@ -340,7 +339,7 @@ class _ProductPageState extends State<ProductPage> {
               ),
             ),
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               width: double.infinity,
               margin: EdgeInsets.only(
                 top: 20,
@@ -385,7 +384,7 @@ class _ProductPageState extends State<ProductPage> {
                       fontWeight: medium,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 12,
                   ),
                   Text(
@@ -417,17 +416,17 @@ class _ProductPageState extends State<ProductPage> {
                   Container(
                     height: 54,
                     width: 54,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       image: DecorationImage(
                         image: AssetImage('assets/button_chat.png'),
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 16,
                   ),
                   Expanded(
-                    child: Container(
+                    child: SizedBox(
                       height: 54,
                       child: TextButton(
                         onPressed: () {

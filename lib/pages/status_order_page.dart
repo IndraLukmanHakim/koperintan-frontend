@@ -7,6 +7,8 @@ import '../providers/auth_provider.dart';
 import 'package:pos/theme.dart';
 
 class StatusorderPage extends StatelessWidget {
+  const StatusorderPage({super.key});
+
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +25,7 @@ class StatusorderPage extends StatelessWidget {
     Widget header() {
       return AppBar(
         leading: IconButton(
-          icon: Icon(Icons.close),
+          icon: const Icon(Icons.close),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -31,7 +33,7 @@ class StatusorderPage extends StatelessWidget {
         backgroundColor: backgroundColor1,
         elevation: 0,
         centerTitle: true,
-        title: Text(
+        title: const Text(
           'Status Order',
         ),
         actions: [

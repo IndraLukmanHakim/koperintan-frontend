@@ -9,6 +9,8 @@ import 'package:pos/theme.dart';
 import 'package:provider/provider.dart';
 
 class CheckoutPage extends StatefulWidget {
+  const CheckoutPage({super.key});
+
   @override
   State<CheckoutPage> createState() => _CheckoutPageState();
 }
@@ -66,7 +68,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
         backgroundColor: backgroundColor1,
         elevation: 0,
         centerTitle: true,
-        title: Text(
+        title: const Text(
           'Checkout Details',
         ),
       );
@@ -108,7 +110,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
           // ADDRESS DETAILS
           Container(
             margin: EdgeInsets.only(top: defaultMargin),
-            padding: EdgeInsets.all(20),
+            padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
               color: backgroundColor4,
               borderRadius: BorderRadius.circular(
@@ -129,7 +131,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                 //   height: 12,
                 // ),
                 Container(
-                  margin: EdgeInsets.only(top: 50),
+                  margin: const EdgeInsets.only(top: 50),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -140,12 +142,12 @@ class _CheckoutPageState extends State<CheckoutPage> {
                           fontWeight: medium,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 12,
                       ),
                       Container(
                         height: 50,
-                        padding: EdgeInsets.symmetric(
+                        padding: const EdgeInsets.symmetric(
                           horizontal: 16,
                         ),
                         decoration: BoxDecoration(
@@ -255,7 +257,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
             margin: EdgeInsets.only(
               top: defaultMargin,
             ),
-            padding: EdgeInsets.all(20),
+            padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
               color: backgroundColor4,
               borderRadius: BorderRadius.circular(12),
@@ -270,7 +272,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                     fontWeight: medium,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 12,
                 ),
                 Row(
@@ -291,7 +293,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 12,
                 ),
                 Row(
@@ -311,7 +313,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 12,
                 ),
                 Row(
@@ -331,7 +333,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 12,
                 ),
                 Row(
@@ -351,14 +353,14 @@ class _CheckoutPageState extends State<CheckoutPage> {
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 12,
                 ),
-                Divider(
+                const Divider(
                   thickness: 1,
                   color: Color(0xff2E3141),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Row(
@@ -386,16 +388,16 @@ class _CheckoutPageState extends State<CheckoutPage> {
           SizedBox(
             height: defaultMargin,
           ),
-          Divider(
+          const Divider(
             thickness: 1,
             color: Color(0xff2E3141),
           ),
           isLoading
               ? Container(
-                  margin: EdgeInsets.only(
+                  margin: const EdgeInsets.only(
                     bottom: 30,
                   ),
-                  child: LoadingButton(),
+                  child: const LoadingButton(),
                 )
               : Container(
                   height: 50,

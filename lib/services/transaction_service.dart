@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:pos/models/product_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:pos/models/status_model.dart';
 

@@ -7,8 +7,9 @@ import '../product_page.dart';
 class ProductCard extends StatelessWidget {
   @override
   final ProductModel product;
-  ProductCard(this.product);
+  const ProductCard(this.product, {super.key});
 
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {

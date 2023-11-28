@@ -5,14 +5,15 @@ import 'package:pos/theme.dart';
 class StatusCard extends StatelessWidget {
   @override
   final StatusModel status;
-  StatusCard(this.status);
+  const StatusCard(this.status, {super.key});
 
+  @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(
+      margin: const EdgeInsets.only(
         top: 12,
       ),
-      padding: EdgeInsets.symmetric(
+      padding: const EdgeInsets.symmetric(
         horizontal: 12,
         vertical: 20,
       ),
@@ -36,7 +37,7 @@ class StatusCard extends StatelessWidget {
                       ),
                       overflow: TextOverflow.ellipsis,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 2,
                     ),
                     Text(
@@ -60,7 +61,7 @@ class StatusCard extends StatelessWidget {
                       ),
                       overflow: TextOverflow.ellipsis,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 2,
                     ),
                     Text(
@@ -87,7 +88,7 @@ class StatusCard extends StatelessWidget {
                       ),
                       overflow: TextOverflow.ellipsis,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 2,
                     ),
                     Text(
@@ -108,7 +109,7 @@ class StatusCard extends StatelessWidget {
                       ),
                       overflow: TextOverflow.ellipsis,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 2,
                     ),
                     Text(

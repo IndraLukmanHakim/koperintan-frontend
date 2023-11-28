@@ -11,12 +11,14 @@ class EditProfilePage extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController phoneNumberController = TextEditingController();
 
+  EditProfilePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     Widget header() {
       return AppBar(
         leading: IconButton(
-          icon: Icon(Icons.close),
+          icon: const Icon(Icons.close),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -24,7 +26,7 @@ class EditProfilePage extends StatelessWidget {
         backgroundColor: backgroundColor1,
         elevation: 0,
         centerTitle: true,
-        title: Text(
+        title: const Text(
           'Edit Profile',
         ),
         actions: [
@@ -44,31 +46,34 @@ class EditProfilePage extends StatelessWidget {
 
       return ElevatedButton(
         onPressed: () async {
-          bool success = await authProvider.editProfile(
+          if (await authProvider.editProfile(
             name: nameController.text,
-            nopol: usernameController.text,
+            // nopol: usernameController.text,
             phone: phoneNumberController.text,
-          );
-
-          if (success) {
+          )) {
             // Profile edit successful
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Berhasil edit profile'),
+              ),
+            );
             Navigator.pop(context);
           } else {
             // Profile edit failed, show an error message
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
+              const SnackBar(
                 content: Text('Gagal edit profile'),
               ),
             );
           }
         },
-        child: Text('Edit Profile'),
+        child: const Text('Edit Profile'),
       );
     }
 
     Widget nameInput() {
       return Container(
-        margin: EdgeInsets.only(top: 30),
+        margin: const EdgeInsets.only(top: 30),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -98,7 +103,7 @@ class EditProfilePage extends StatelessWidget {
 
     Widget usernameInput() {
       return Container(
-        margin: EdgeInsets.only(
+        margin: const EdgeInsets.only(
           top: 30,
         ),
         child: Column(
@@ -130,7 +135,7 @@ class EditProfilePage extends StatelessWidget {
 
     Widget phoneNumberInput() {
       return Container(
-        margin: EdgeInsets.only(
+        margin: const EdgeInsets.only(
           top: 30,
         ),
         child: Column(
@@ -176,7 +181,7 @@ class EditProfilePage extends StatelessWidget {
               margin: EdgeInsets.only(
                 top: defaultMargin,
               ),
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 shape: BoxShape.circle,
                 image: DecorationImage(
                   fit: BoxFit.fill,
@@ -185,11 +190,12 @@ class EditProfilePage extends StatelessWidget {
               ),
             ),
             nameInput(),
-            usernameInput(),
+            // usernameInput(),
             // emailInput(),
             phoneNumberInput(), // Add the phone number input field
 
             // add the button
+            const SizedBox(height: 30),
             editProfileButton(context),
           ],
         ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:pos/models/user_model.dart';
 import 'package:pos/pages/widgets/product_tile.dart';
 import 'package:pos/providers/auth_provider.dart';
@@ -10,13 +9,14 @@ import 'package:pos/providers/wishlist_provider.dart';
 import 'package:pos/theme.dart';
 import 'package:pos/pages/widgets/product_card.dart';
 import 'package:provider/provider.dart';
-import 'package:pos/models/product_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../providers/transaction_provider.dart';
 import '../widgets/category_tile.dart';
 
 class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -41,7 +41,7 @@ class _HomePageState extends State<HomePage> {
     await prefs.reload();
 
     print(
-        'Wishlist on startup: ${await Provider.of<WishlistProvider>(context, listen: false).wishlist}');
+        'Wishlist on startup: ${Provider.of<WishlistProvider>(context, listen: false).wishlist}');
     print(prefs.getString('token'));
     print(prefs.getString('wishlist'));
     print(prefs.containsKey('token'));
@@ -152,7 +152,7 @@ class _HomePageState extends State<HomePage> {
 
     Widget popularProducts() {
       return Container(
-          margin: EdgeInsets.only(top: 14),
+          margin: const EdgeInsets.only(top: 14),
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(children: [
@@ -203,7 +203,7 @@ class _HomePageState extends State<HomePage> {
 
     Widget newArrivals() {
       return Container(
-        margin: EdgeInsets.only(
+        margin: const EdgeInsets.only(
           top: 14,
         ),
         child: Column(

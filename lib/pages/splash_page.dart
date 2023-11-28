@@ -1,8 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:pos/providers/auth_provider.dart';
 import 'package:pos/providers/product_provider.dart';
-import 'package:pos/providers/splash_provider.dart';
 import 'package:pos/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -10,13 +8,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../providers/category_provider.dart';
 
 class SplashPage extends StatefulWidget {
+  const SplashPage({super.key});
+
   @override
   // State<SplashPage> createState() => _SplashPageState();
   _SplashPageState createState() => _SplashPageState();
 }
 
 class _SplashPageState extends State<SplashPage> {
-  @override
   getInit() async {
     // ignore: use_build_context_synchronously
 
@@ -43,12 +42,14 @@ class _SplashPageState extends State<SplashPage> {
     }
   }
 
+  @override
   void initState() {
     getInit();
 
     super.initState();
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor1,
@@ -56,7 +57,7 @@ class _SplashPageState extends State<SplashPage> {
         child: Container(
           width: 130,
           height: 150,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             image: DecorationImage(
               image: AssetImage(
                 'assets/logo.png',

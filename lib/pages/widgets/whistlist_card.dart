@@ -5,16 +5,16 @@ import 'package:pos/theme.dart';
 import 'package:provider/provider.dart';
 
 class WishtlistCard extends StatelessWidget {
-  @override
   final ProductModel product;
-  WishtlistCard(this.product);
+  const WishtlistCard(this.product, {super.key});
+  @override
   Widget build(BuildContext context) {
     WishlistProvider wishlistProvider = Provider.of<WishlistProvider>(context);
     return Container(
-      margin: EdgeInsets.only(
+      margin: const EdgeInsets.only(
         top: 20,
       ),
-      padding: EdgeInsets.only(
+      padding: const EdgeInsets.only(
         top: 10,
         left: 12,
         bottom: 14,
@@ -35,7 +35,7 @@ class WishtlistCard extends StatelessWidget {
               width: 34,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             width: 12,
           ),
           ClipRRect(
@@ -48,7 +48,7 @@ class WishtlistCard extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             width: 12,
           ),
           Expanded(

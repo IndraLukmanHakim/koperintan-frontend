@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:pos/models/cart_model.dart';
-import 'package:pos/providers/cart_provider.dart';
 import 'package:pos/theme.dart';
 
 class CheckoutCard extends StatelessWidget {
   @override
   final CartModel cart;
-  CheckoutCard(this.cart);
+  const CheckoutCard(this.cart, {super.key});
+  @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(
+      margin: const EdgeInsets.only(
         top: 12,
       ),
-      padding: EdgeInsets.symmetric(
+      padding: const EdgeInsets.symmetric(
         horizontal: 12,
         vertical: 20,
       ),
@@ -33,7 +33,7 @@ class CheckoutCard extends StatelessWidget {
               color: backgroundColor6,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             width: 12,
           ),
           Expanded(
@@ -48,7 +48,7 @@ class CheckoutCard extends StatelessWidget {
                   ),
                   overflow: TextOverflow.ellipsis,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 2,
                 ),
                 Text(
@@ -58,7 +58,7 @@ class CheckoutCard extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(
+          const SizedBox(
             width: 12,
           ),
           Text(

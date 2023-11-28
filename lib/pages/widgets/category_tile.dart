@@ -5,10 +5,10 @@ import "package:provider/provider.dart";
 import 'package:pos/theme.dart';
 
 class CategoryTile extends StatelessWidget {
-  @override
   final CategoryModel categoryList;
 
-  CategoryTile(this.categoryList);
+  const CategoryTile(this.categoryList, {super.key});
+  @override
   Widget build(BuildContext context) {
     CategoryProvider categoryProvider = Provider.of<CategoryProvider>(context);
     return GestureDetector(
@@ -16,8 +16,8 @@ class CategoryTile extends StatelessWidget {
         categoryProvider.selectCategory = categoryList.id!;
       },
       child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-          margin: EdgeInsets.only(right: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+          margin: const EdgeInsets.only(right: 16),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
             // isSelected ? (color: primaryColor) : (color: backgroundColor4),) ,

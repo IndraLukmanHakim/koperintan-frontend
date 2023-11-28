@@ -4,17 +4,19 @@ import 'package:provider/provider.dart';
 
 import '../providers/auth_provider.dart';
 
-class EditProfilePage extends StatelessWidget {
+class ChangePasswordPage extends StatelessWidget {
   // Define controllers for each TextFormField
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController new_passwordController = TextEditingController();
+
+  ChangePasswordPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     Widget header() {
       return AppBar(
         leading: IconButton(
-          icon: Icon(Icons.close),
+          icon: const Icon(Icons.close),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -22,7 +24,7 @@ class EditProfilePage extends StatelessWidget {
         backgroundColor: backgroundColor1,
         elevation: 0,
         centerTitle: true,
-        title: Text(
+        title: const Text(
           'Ganti Password',
         ),
         actions: [
@@ -53,13 +55,13 @@ class EditProfilePage extends StatelessWidget {
           } else {
             // Profile edit failed, show an error message
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
+              const SnackBar(
                 content: Text('Ganti Password Gagal!'),
               ),
             );
           }
         },
-        child: Text('Ganti Password'),
+        child: const Text('Ganti Password'),
       );
     }
 
@@ -78,7 +80,7 @@ class EditProfilePage extends StatelessWidget {
                 fontWeight: medium,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 12,
             ),
             TextFormField(
@@ -123,7 +125,7 @@ class EditProfilePage extends StatelessWidget {
                 fontWeight: medium,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 12,
             ),
             TextFormField(
@@ -168,7 +170,7 @@ class EditProfilePage extends StatelessWidget {
               margin: EdgeInsets.only(
                 top: defaultMargin,
               ),
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 shape: BoxShape.circle,
                 image: DecorationImage(
                   fit: BoxFit.fill,

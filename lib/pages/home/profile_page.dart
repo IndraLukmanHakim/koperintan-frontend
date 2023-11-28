@@ -9,6 +9,8 @@ import '../../models/user_model.dart';
 import '../../providers/auth_provider.dart';
 
 class ProfilPage extends StatelessWidget {
+  const ProfilPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     PageProvider pageProvider = Provider.of<PageProvider>(context);
@@ -33,7 +35,7 @@ class ProfilPage extends StatelessWidget {
                     width: 64,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 16,
                 ),
                 Expanded(
@@ -77,7 +79,7 @@ class ProfilPage extends StatelessWidget {
 
     Widget menuItem(String text) {
       return Container(
-        margin: EdgeInsets.only(top: 16),
+        margin: const EdgeInsets.only(top: 16),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -94,8 +96,8 @@ class ProfilPage extends StatelessWidget {
       );
     }
 
-    _launchWhatsapp() async {
-      var text = "Hello,  " +
+    launchWhatsapp() async {
+      var text = "Hello,  "
           " Saya ${authProvider.user?.name} dengan nopol ${authProvider.user?.nopol} ingin bertanya mengenai produk yang saya beli melalui aplikasi Koper Intan";
       var whatsapp = "6285171701900";
       var whatsappAndroid =
@@ -122,7 +124,7 @@ class ProfilPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Text(
@@ -138,6 +140,14 @@ class ProfilPage extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
+                Navigator.pushNamed(context, '/change-password');
+              },
+              child: menuItem(
+                'Ganti Password',
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
                 Navigator.pushNamed(context, '/status-order');
               },
               child: menuItem(
@@ -146,13 +156,13 @@ class ProfilPage extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                _launchWhatsapp();
+                launchWhatsapp();
               },
               child: menuItem(
                 'Help',
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             // Text(

@@ -1,9 +1,6 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:pos/models/user_model.dart';
 import 'package:pos/services/auth_service.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthProvider with ChangeNotifier {
@@ -106,7 +103,7 @@ class AuthProvider with ChangeNotifier {
       String token = await getuserToken();
 
       // Call AuthServices to change the password
-      await authServices!.changePassword(
+      await authServices?.changePassword(
         token: token,
         password: password,
         new_password: new_password,
@@ -137,20 +134,28 @@ class AuthProvider with ChangeNotifier {
     String? nopol,
     String? phone,
   }) async {
+    sharedPreferences = await SharedPreferences.getInstance();
+
+    String token = await getuserToken();
+    //print data
+    print(token);
+    print(name);
+    print(nopol);
+    print(phone);
     try {
       // Access the token from the AuthProvider
-      String token = await getuserToken();
 
       // Call AuthServices to edit the profile
-      await authServices!.editProfile(
+      await AuthServices(sharedPreferences).editProfile(
         token: token,
         name: name,
-        nopol: nopol,
+        // nopol: nopol,
         phone: phone,
       );
 
       // Fetch and update the user information
       await updateuser(token);
+      print('berhasil di AuthProvider');
 
       return true;
     } catch (e) {

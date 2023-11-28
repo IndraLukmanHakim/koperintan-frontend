@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pos/models/cart_model.dart';
 import 'package:pos/models/product_model.dart';
-import 'package:pos/pages/widgets/product_card.dart';
 
 class CartProvider with ChangeNotifier {
   List<CartModel> _cartList = [];
@@ -50,7 +49,7 @@ class CartProvider with ChangeNotifier {
   totalItems() {
     int total = 0;
     for (var item in _cartList) {
-      total += item.quantity!;
+      total += item.quantity;
     }
     return total;
   }
@@ -58,7 +57,7 @@ class CartProvider with ChangeNotifier {
   totalPrice() {
     int total = 0;
     for (var item in _cartList) {
-      total += item.product!.price! * item.quantity!;
+      total += item.product!.price! * item.quantity;
     }
     return total;
   }
@@ -66,7 +65,7 @@ class CartProvider with ChangeNotifier {
   totalPoint() {
     int total = 0;
     for (var item in _cartList) {
-      total += item.product!.point! * item.quantity!;
+      total += item.product!.point! * item.quantity;
     }
     return total;
   }

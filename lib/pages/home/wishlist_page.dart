@@ -7,6 +7,8 @@ import 'package:pos/theme.dart';
 import 'package:provider/provider.dart';
 
 class WhislistPage extends StatelessWidget {
+  const WhislistPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     // WishlistProvider wishlistProvider = Provider.of<WishlistProvider>(context);
@@ -41,7 +43,7 @@ class WhislistPage extends StatelessWidget {
               'assets/image_wishlist.png',
               width: 74,
             ),
-            SizedBox(
+            const SizedBox(
               height: 23,
             ),
             Text(
@@ -51,24 +53,24 @@ class WhislistPage extends StatelessWidget {
                 fontWeight: medium,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 12,
             ),
             Text(
               'Ayo temukan item favoritmu',
               style: secondaryTextStyle,
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
-            Container(
+            SizedBox(
               height: 44,
               child: TextButton(
                 onPressed: () {
                   pageProvider.currentIndex = 0;
                 },
                 style: TextButton.styleFrom(
-                  padding: EdgeInsets.symmetric(
+                  padding: const EdgeInsets.symmetric(
                     horizontal: 24,
                     vertical: 10,
                   ),
@@ -127,7 +129,7 @@ class WhislistPage extends StatelessWidget {
           },
           style: TextButton.styleFrom(
             backgroundColor: primaryColor,
-            padding: EdgeInsets.symmetric(
+            padding: const EdgeInsets.symmetric(
               horizontal: 20,
             ),
             shape: RoundedRectangleBorder(

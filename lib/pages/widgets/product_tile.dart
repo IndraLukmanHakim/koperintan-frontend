@@ -7,7 +7,8 @@ import '../product_page.dart';
 class ProductTile extends StatelessWidget {
   @override
   final ProductModel product;
-  ProductTile(this.product);
+  const ProductTile(this.product, {super.key});
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
@@ -43,7 +44,7 @@ class ProductTile extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               width: 12,
             ),
             Expanded(
@@ -56,7 +57,7 @@ class ProductTile extends StatelessWidget {
                     fontSize: 12,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 6,
                 ),
                 Text(
@@ -66,7 +67,7 @@ class ProductTile extends StatelessWidget {
                     fontWeight: semiBold,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 6,
                 ),
                 Text(

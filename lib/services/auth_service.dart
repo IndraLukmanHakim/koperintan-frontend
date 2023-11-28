@@ -104,8 +104,6 @@ class AuthServices {
 
     var headers = {'Content-Type': 'application/json'};
     var body = jsonEncode({
-      // 'name': name,
-      // 'username': username,
       'nopol': nopol,
       'password': password,
     });
@@ -167,29 +165,43 @@ class AuthServices {
     String? nopol,
     String? phone,
   }) async {
+    print(token);
+    print(name);
+    print(nopol);
+    print(phone);
+
+    var url = '$baseUrl/user';
+
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': token,
+    };
+
+    // Include only non-null values in the request body
+    var body = <String, dynamic>{};
+    if (name != null) {
+      body['name'] = name;
+    }
+    if (nopol != null) {
+      body['nopol'] = nopol;
+    }
+    if (phone != null) {
+      body['phone'] = phone;
+    }
+
     try {
-      var url = '$baseUrl/user';
-
-      var headers = {
-        'Content-Type': 'application/json',
-        'Authorization': token,
-      };
-
-      // Include only non-null values in the request body
-      var body = jsonEncode({
-        if (name != null) 'name': name,
-        if (nopol != null) 'nopol': nopol,
-        if (phone != null) 'phone': phone,
-      });
-
-      var response = await http.put(
+      var response = await http.post(
         Uri.parse(url),
         headers: headers,
-        body: body,
+        body: jsonEncode(body),
       );
+
+      print('Response Status Code: ${response.statusCode}');
+      print('Response Body: ${response.body}');
 
       if (response.statusCode == 200) {
         print('Profile updated successfully');
+
         // You can handle the response data if needed
       } else {
         throw Exception('Failed to update profile');
@@ -205,8 +217,8 @@ class AuthServices {
 
     try {
       print(token);
-      await sharedPreferences?.setString('token', token);
-      bool keyExist = sharedPreferences?.containsKey('token') ?? false;
+      await sharedPreferences.setString('token', token);
+      bool keyExist = sharedPreferences.containsKey('token');
       print(keyExist);
       print("berhasil save token");
     } catch (e) {

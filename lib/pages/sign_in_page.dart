@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:pos/pages/widgets/loading_button.dart';
 import 'package:pos/providers/auth_provider.dart';
 import 'package:pos/theme.dart';
 import 'package:provider/provider.dart';
 
 class SignInPage extends StatefulWidget {
+  const SignInPage({super.key});
+
   @override
   State<SignInPage> createState() => _SignInPageState();
 }
@@ -37,7 +38,7 @@ class _SignInPageState extends State<SignInPage> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             backgroundColor: alertColor,
-            content: Text(
+            content: const Text(
               'Gagal Masuk!!',
               textAlign: TextAlign.center,
             ),
@@ -51,7 +52,7 @@ class _SignInPageState extends State<SignInPage> {
 
     Widget header() {
       return Container(
-        margin: EdgeInsets.only(top: 30),
+        margin: const EdgeInsets.only(top: 30),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -62,7 +63,7 @@ class _SignInPageState extends State<SignInPage> {
                 fontWeight: semiBold,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 2,
             ),
             Text(
@@ -76,7 +77,7 @@ class _SignInPageState extends State<SignInPage> {
 
     Widget emailInput() {
       return Container(
-        margin: EdgeInsets.only(top: 70),
+        margin: const EdgeInsets.only(top: 70),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -87,12 +88,12 @@ class _SignInPageState extends State<SignInPage> {
                 fontWeight: medium,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 12,
             ),
             Container(
               height: 50,
-              padding: EdgeInsets.symmetric(
+              padding: const EdgeInsets.symmetric(
                 horizontal: 16,
               ),
               decoration: BoxDecoration(
@@ -106,7 +107,7 @@ class _SignInPageState extends State<SignInPage> {
                     'assets/icon_email.png',
                     width: 17,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 16,
                   ),
                   Expanded(
@@ -129,7 +130,7 @@ class _SignInPageState extends State<SignInPage> {
 
     Widget passwordInput() {
       return Container(
-        margin: EdgeInsets.only(top: 20),
+        margin: const EdgeInsets.only(top: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -140,12 +141,12 @@ class _SignInPageState extends State<SignInPage> {
                 fontWeight: medium,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 12,
             ),
             Container(
               height: 50,
-              padding: EdgeInsets.symmetric(
+              padding: const EdgeInsets.symmetric(
                 horizontal: 16,
               ),
               decoration: BoxDecoration(
@@ -159,7 +160,7 @@ class _SignInPageState extends State<SignInPage> {
                     'assets/icon_password.png',
                     width: 17,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 16,
                   ),
                   Expanded(
@@ -185,7 +186,7 @@ class _SignInPageState extends State<SignInPage> {
       return Container(
         height: 50,
         width: double.infinity,
-        margin: EdgeInsets.only(top: 30),
+        margin: const EdgeInsets.only(top: 30),
         child: TextButton(
           onPressed: handleSignIn,
           //  () {
@@ -207,7 +208,7 @@ class _SignInPageState extends State<SignInPage> {
 
     Widget footer() {
       return Container(
-        margin: EdgeInsets.only(bottom: 30),
+        margin: const EdgeInsets.only(bottom: 30),
         child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
           Text(
             'Belum Punya Akun? ',
@@ -239,8 +240,8 @@ class _SignInPageState extends State<SignInPage> {
               header(),
               emailInput(),
               passwordInput(),
-              isLoading ? LoadingButton() : signInButton(),
-              Spacer(),
+              isLoading ? const LoadingButton() : signInButton(),
+              const Spacer(),
               footer(),
             ],
           ),

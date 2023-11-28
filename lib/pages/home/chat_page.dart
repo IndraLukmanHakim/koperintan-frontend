@@ -8,6 +8,8 @@ import '../../providers/transaction_provider.dart';
 import '../widgets/status_card.dart';
 
 class ChatPage extends StatelessWidget {
+  const ChatPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     AuthProvider authProvider = Provider.of<AuthProvider>(context);
@@ -54,24 +56,24 @@ class ChatPage extends StatelessWidget {
                   fontWeight: medium,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Text(
                 'Anda belum pernah menyelesaikan transaksi',
                 style: secondaryTextStyle,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
-              Container(
+              SizedBox(
                 height: 44,
                 child: TextButton(
                   onPressed: () {
                     pageProvider.currentIndex = 0;
                   },
                   style: TextButton.styleFrom(
-                    padding: EdgeInsets.symmetric(
+                    padding: const EdgeInsets.symmetric(
                       horizontal: 24,
                       vertical: 10,
                     ),
@@ -128,7 +130,7 @@ class ChatPage extends StatelessWidget {
         children: [
           header(),
           transactionProvider.status.isEmpty ? content() : contentisi(),
-          SizedBox(
+          const SizedBox(
             height: 15,
           ),
         ],
